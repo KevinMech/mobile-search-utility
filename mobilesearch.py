@@ -1,13 +1,13 @@
-import re
+import os
+import glob
 
-# Add location for the file to search here
-FILE_LOCATION = '2016-17-searches.txt'
 
-# Grab all lines from the file specified
-lines = []
-with open(FILE_LOCATION) as file:
-    lines = file.readlines()
+def _foldersearch():
+    '''Searches in the folder that the program is currently in and pulls all txt files into a list'''
+    folder = os.path.dirname(os.path.realpath(__file__))
+    os.chdir(folder)
+    files = glob.glob('*.txt')
+    return files
 
-# Iterate through each line in the list
-for i in range(0, len(lines)):
-    print(lines[i])
+
+files = _foldersearch()
