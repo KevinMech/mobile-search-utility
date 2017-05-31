@@ -10,4 +10,10 @@ def _foldersearch():
     return files
 
 
-files = _foldersearch()
+def init():
+    print('Searching files...')
+    files = _foldersearch()
+    print('Found ' + str(len(files)) + ' files!')
+
+
+init()
