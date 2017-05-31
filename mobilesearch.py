@@ -2,7 +2,7 @@ import os
 import glob
 
 
-def _pullfiles():
+def _pull_files():
     '''Searches in the folder that the program is currently in and pulls all txt files into a list'''
     folder = os.path.dirname(os.path.realpath(__file__))
     os.chdir(folder)
@@ -10,18 +10,20 @@ def _pullfiles():
     return files
 
 
-def _pulltext(files):
+def _pull_text(files):
     '''Pull all text from each file pulled'''
     for x in range(0, len(files)):
         with open(files[x]) as file:
             text = file.readlines()
     return text
 
-def init():
+
+def main():
     print('Searching files...')
-    files = _pullfiles()
+    files = _pull_files()
     print('Found ' + str(len(files)) + ' files!')
-    text = _pulltext(files)
+    text = _pull_text(files)
 
 
-init()
+if __name__ == '__main__':
+    main()
