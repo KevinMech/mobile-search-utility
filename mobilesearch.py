@@ -3,38 +3,41 @@ import sys
 import glob
 
 
-def pull_files(folder):
-    '''Searches in the folder that the program is currently in and pulls all txt files into a list'''
-    os.chdir(folder)
+def extract():
+    # Determines whether the second argument is a directory, file, or neither, and extracts the text accordingly.
+    files = []
+    if os.path.isdir(sys.argv[1]):
+        directory = os.path.abspath(sys.argv[1])
+        os.chdir(directory)
+        files = pull_files()
+    elif os.path.isfile(sys.argv[1]):
+        directory = os.path.dirname(os.path.abspath(sys.argv[1]))
+        os.chdir(directory)
+        files.append(os.path.basename(sys.argv[1]))
+    else:
+        print('Error: Please enter a file or directory path as your second argument')
+        sys.exit(1)
+    text = pull_text(files)
+    return text
+
+
+def pull_files():
+    '''Searches in the specified directory and pulls all txt files into a list'''
     files = glob.glob('*.txt')
     return files
 
 
-def pull_text(files, single):
+def pull_text(files):
     '''Extract text from all files specified'''
-    if single:
-        with open(files) as file:
-            text = file.readlines()
-    else:
-        for i in range(0, len(files)):
-            with open(files[i]) as file:
-                text = file.readlines()
-    print(text)
+    text = []
+    for i in range(0, len(files)):
+        with open(files[i]) as file:
+            text += file.readlines()
     return text
 
 
 def main():
-    # Check to see whether the first argument is a directory or file.
-    if os.path.isdir(sys.argv[1]):
-        # print('is directory')
-        files = pull_files(sys.argv[1])
-        pull_text(files, False)
-    elif os.path.isfile(sys.argv[1]):
-        # print('is file')
-        file = os.path.basename(sys.argv[1])
-        pull_text(file, True)
-    else:
-        print('Error: Please specifiy either a file or directory in your first argument')
+    extraction_method()
 
 
 if __name__ == '__main__':
