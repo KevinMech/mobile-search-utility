@@ -15,8 +15,7 @@ def extract():
         os.chdir(directory)
         files.append(os.path.basename(sys.argv[1]))
     else:
-        print('Error: Please enter a file or directory path as your second argument')
-        sys.exit(1)
+        error('Please enter a file or directory path as your second argument')
     text = pull_text(files)
     return text
 
@@ -36,6 +35,12 @@ def pull_text(files):
     return text
 
 
+def error(message):
+    print('error: ' + message)
+    print('usage: python3 mobilesearch.py [file/directory]')
+    sys.exit(1)
+
+
 def main():
     extract()
 
@@ -44,5 +49,4 @@ if __name__ == '__main__':
     if len(sys.argv) >= 2:
         main()
     else:
-        print('Error: Not enough arguments provided!')
-        print('usage: python3 mobilesearch.py [file/directory]')
+        error('Not enough arguments provided!')
