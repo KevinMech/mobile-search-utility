@@ -7,10 +7,10 @@ import re
 class Search():
     """Object that stores various information about a search result"""
 
-    def __init__(self, persona, searchtype):
+    def __init__(self, persona, searchtype, search):
         self.persona = persona
         self.type = searchtype
-        #self.search = search
+        self.search = search
 
 
 def extract():
@@ -45,6 +45,17 @@ def pull_text(files):
     return text
 
 
+def filter(text):
+    '''Filter search results, and return list of filtered results'''
+    results = []
+    for i in range(0, len(text)):
+        split_text = re.split('/', text[i])
+        keyword = re.search(r'filter=\w+', text[i])
+        filteredkeyword = re.sub(r'filter=', '', keyword.group(0))
+        search = Search(split_text[1], split_text[2], filteredkeyword)
+        results.append(search)
+
+
 def error(message):
     '''Print error message to console and exit program'''
     print('error: ' + message)
@@ -54,7 +65,6 @@ def error(message):
 
 def main():
     text = extract()
-    print(text)
     filter(text)
 
 
