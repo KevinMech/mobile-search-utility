@@ -50,10 +50,11 @@ def filter(text):
     results = []
     for i in range(0, len(text)):
         split_text = re.split('/', text[i])
-        keyword = re.search(r'filter=\w+', text[i])
+        keyword = re.search(r'filter=(.*)', text[i])
         filteredkeyword = re.sub(r'filter=', '', keyword.group(0))
         search = Search(split_text[1], split_text[2], filteredkeyword)
         results.append(search)
+    print(results[1].search)
 
 
 def error(message):
