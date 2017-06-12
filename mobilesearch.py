@@ -1,6 +1,16 @@
 import os
 import sys
 import glob
+import re
+
+
+class Search():
+    """Object that stores various information about a search result"""
+
+    def __init__(self, persona, searchtype):
+        self.persona = persona
+        self.type = searchtype
+        #self.search = search
 
 
 def extract():
@@ -36,13 +46,16 @@ def pull_text(files):
 
 
 def error(message):
+    '''Print error message to console and exit program'''
     print('error: ' + message)
     print('usage: python3 mobilesearch.py [file/directory]')
     sys.exit(1)
 
 
 def main():
-    extract()
+    text = extract()
+    print(text)
+    filter(text)
 
 
 if __name__ == '__main__':
