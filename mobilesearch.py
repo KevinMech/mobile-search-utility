@@ -57,7 +57,13 @@ def filter(text):
         keyword = re.search(r'filter=(.*)', text[i])
         # Drops the 'filter=' in keyword string
         filteredkeyword = re.sub(r'filter=', '', keyword.group(0))
-        search = Search(persona, searchtype, filteredkeyword)
+        # Grabs all text before '&'
+        filteredkeyword2 = re.search(r'.+?(?=&)', filteredkeyword)
+        # If no text was found in the last statement, use the first filtered keyword then. Otherwise, use the truncuated keyword
+        if filteredkeyword2 is None:
+            search = Search(persona, searchtype, filteredkeyword)
+        else:
+            search = Search(persona, searchtype, filteredkeyword2.group(0))
         results.append(search)
     return results
 
