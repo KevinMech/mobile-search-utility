@@ -41,4 +41,8 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) >= 2:
+        main()
+    else:
+        print('Error: Not enough arguments provided!')
+        print('usage: python3 mobilesearch.py [file/directory]')
