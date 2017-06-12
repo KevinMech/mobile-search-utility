@@ -4,7 +4,7 @@ import glob
 
 
 def extract():
-    # Determines whether the second argument is a directory, file, or neither, and extracts the text accordingly.
+    ''' Determines whether the second argument is a directory, file, or neither, and extracts the text accordingly.'''
     files = []
     if os.path.isdir(sys.argv[1]):
         directory = os.path.abspath(sys.argv[1])
@@ -37,7 +37,7 @@ def pull_text(files):
 
 
 def main():
-    extraction_method()
+    extract()
 
 
 if __name__ == '__main__':
