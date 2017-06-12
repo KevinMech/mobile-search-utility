@@ -52,18 +52,14 @@ def filter(text):
         # Grab the persona and search type from the string
         split_text = re.split('/', text[i])
         persona = split_text[1]
-        searchtype = split_text[2]
-        # Grabs all text after 'filter=' and stores in keyword
-        keyword = re.search(r'filter=(.*)', text[i])
+        search_type = split_text[2]
+        # Grabs all text after 'filter=' and before the next & char, and stores in keyword
+        keyword = re.search(r'filter=([\w+]+)', text[i])
         # Drops the 'filter=' in keyword string
-        filteredkeyword = re.sub(r'filter=', '', keyword.group(0))
-        # Grabs all text before '&'
-        filteredkeyword2 = re.search(r'.+?(?=&)', filteredkeyword)
-        # If no text was found in the last statement, use the first filtered keyword then. Otherwise, use the truncuated keyword
-        if filteredkeyword2 is None:
-            search = Search(persona, searchtype, filteredkeyword)
-        else:
-            search = Search(persona, searchtype, filteredkeyword2.group(0))
+        filteredkeyword = None
+        if keyword is not None:
+            filteredkeyword = re.sub(r'filter=', '', keyword.group(0))
+        search = Search(persona, search_type, filteredkeyword)
         results.append(search)
     return results
 
@@ -79,7 +75,7 @@ def main():
     text = extract()
     results = filter(text)
     for x in range(0, len(results)):
-        print(results[x].search)
+        print(results[x].search, results[x].persona, results[x].type)
 
 
 if __name__ == '__main__':
