@@ -49,12 +49,17 @@ def filter(text):
     '''Filter search results, and return list of filtered results'''
     results = []
     for i in range(0, len(text)):
+        # Grab the persona and search type from the string
         split_text = re.split('/', text[i])
+        persona = split_text[1]
+        searchtype = split_text[2]
+        # Grabs all text after 'filter=' and stores in keyword
         keyword = re.search(r'filter=(.*)', text[i])
+        # Drops the 'filter=' in keyword string
         filteredkeyword = re.sub(r'filter=', '', keyword.group(0))
-        search = Search(split_text[1], split_text[2], filteredkeyword)
+        search = Search(persona, searchtype, filteredkeyword)
         results.append(search)
-    print(results[1].search)
+    return results
 
 
 def error(message):
@@ -66,7 +71,9 @@ def error(message):
 
 def main():
     text = extract()
-    filter(text)
+    results = filter(text)
+    for x in range(0, len(results)):
+        print(results[x].search)
 
 
 if __name__ == '__main__':
