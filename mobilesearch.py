@@ -79,9 +79,14 @@ def count(filteredtext):
     # Count all words in list, and insert results into dictionary
     for i in range(0, len(keywords)):
         count = text.count(keywords[i])
-        print(text)
         results[keywords[i]] = count
-    print(results)
+    return results
+
+
+def display(results):
+    '''Prints results onto screen'''
+    for word in sorted(results, key=results.get):
+        print(word, results[word])
 
 
 def error(message):
@@ -94,7 +99,8 @@ def error(message):
 def main():
     text = extract()
     filteredtext = filter(text)
-    count(filteredtext)
+    results = count(filteredtext)
+    display(results)
 
 
 if __name__ == '__main__':
