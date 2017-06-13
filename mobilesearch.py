@@ -46,22 +46,31 @@ def pull_text(files):
 
 
 def filter(text):
-    '''Filter search results, and return list of filtered results'''
-    results = []
+    '''Filter search results, and return list of filtered text'''
+    filteredtext = []
     for i in range(0, len(text)):
         # Grab the persona and search type from the string
         split_text = re.split('/', text[i])
         persona = split_text[1]
         search_type = split_text[2]
-        # Grabs all text after 'filter=' and before the next & char, and stores in keyword
+        # Grabs all text after 'filter=' and before the next & char, and stores
+        # in keyword
         keyword = re.search(r'filter=([\w+]+)', text[i])
         # Drops the 'filter=' in keyword string
         filteredkeyword = None
         if keyword is not None:
             filteredkeyword = re.sub(r'filter=', '', keyword.group(0))
         search = Search(persona, search_type, filteredkeyword)
-        results.append(search)
-    return results
+        filteredtext.append(search)
+    return filteredtext
+
+
+def count(filteredtext):
+    '''Counts how many times the word appears in the list'''
+    text = []
+    results = {}
+    for i in range(0, len(filteredtext)):
+        text.append(filteredtext[i].search)
 
 
 def error(message):
@@ -73,9 +82,10 @@ def error(message):
 
 def main():
     text = extract()
-    results = filter(text)
-    for x in range(0, len(results)):
-        print(results[x].search, results[x].persona, results[x].type)
+    filteredtext = filter(text)
+    # for x in range(0, len(results)):
+    #     print(results[x].search, results[x].persona, results[x].type)
+    count(filteredtext)
 
 
 if __name__ == '__main__':
