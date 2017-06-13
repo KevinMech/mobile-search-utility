@@ -53,8 +53,7 @@ def filter(text):
         split_text = re.split('/', text[i])
         persona = split_text[1]
         search_type = split_text[2]
-        # Grabs all text after 'filter=' and before the next & char, and stores
-        # in keyword
+        # Grabs all text after 'filter=' and before the next & char, and stores in keyword
         keyword = re.search(r'filter=([\w+]+)', text[i])
         # Drops the 'filter=' in keyword string
         filteredkeyword = None
@@ -67,10 +66,22 @@ def filter(text):
 
 def count(filteredtext):
     '''Counts how many times the word appears in the list'''
+    keywords = []
     text = []
     results = {}
+    # Dump all text we are counting into a list
     for i in range(0, len(filteredtext)):
         text.append(filteredtext[i].search)
+    # Dump all unique keyphrases to count into keywords list
+    for i in text:
+        if i not in keywords:
+            keywords.append(i)
+    # Count all words in list, and insert results into dictionary
+    for i in range(0, len(keywords)):
+        count = text.count(keywords[i])
+        print(text)
+        results[keywords[i]] = count
+    print(results)
 
 
 def error(message):
@@ -83,8 +94,6 @@ def error(message):
 def main():
     text = extract()
     filteredtext = filter(text)
-    # for x in range(0, len(results)):
-    #     print(results[x].search, results[x].persona, results[x].type)
     count(filteredtext)
 
 
